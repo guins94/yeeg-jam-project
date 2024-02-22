@@ -16,6 +16,7 @@
 // Converts C style string to NSString
 #define GetStringParam( _x_ ) ( _x_ != NULL ) ? [NSString stringWithUTF8String:_x_] : [NSString stringWithUTF8String:""]
 
+
 #define BANNER_POSITION_TOP 1
 #define BANNER_POSITION_BOTTOM 2
 
@@ -80,6 +81,7 @@ char *const IRONSOURCE_BANNER_EVENTS = "IronSourceBannerEvents";
         [IronSource setBannerDelegate:self];
         [IronSource addImpressionDataDelegate:self];
         [IronSource setConsentViewWithDelegate:self];
+        [IronSource setSegmentDelegate:self];
         
         //set level play listeneres
         [IronSource setLevelPlayBannerDelegate:self.bannerLevelPlayDelegate];
@@ -106,10 +108,6 @@ char *const IRONSOURCE_BANNER_EVENTS = "IronSourceBannerEvents";
 }
 
 #pragma mark Base API
-
-- (void)setMediationSegment:(NSString *)segment {
-    [IronSource setMediationSegment:segment];
-}
 
 - (const char *)getAdvertiserId {
     NSString *advertiserId = [IronSource advertiserId];
@@ -654,12 +652,19 @@ char *const IRONSOURCE_BANNER_EVENTS = "IronSourceBannerEvents";
 
 #pragma mark Banner API
 
-- (void)loadBanner:(NSString *)description width:(NSInteger)width height:(NSInteger)height position:(NSInteger)position placement:(NSString *)placement adaptive:(bool) isAdaptive {
+- (void)loadBanner:(NSString *)description width:(NSInteger)width height:(NSInteger)height position:(NSInteger)position placement:(NSString *)placement adaptive:(bool) isAdaptive containerWidth:(float)containerWidth containerHeight:(float)containerHeight {
     @synchronized(self) {
         _position = position;
         ISBannerSize* size = [self getBannerSize:description width:width height:height];
-        size.adaptive = isAdaptive;
         
+        // Handle the new Adaptive Banner
+        if (isAdaptive) {
+            size.adaptive = isAdaptive;
+            ISContainerParams *params = [[ISContainerParams alloc] initWithWidth:containerWidth height:containerHeight];
+            [size setContainerParams:params];
+            
+        }
+       
         _bannerViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
         [IronSource loadBannerWithViewController:_bannerViewController size:size placement:placement];
     }
@@ -721,6 +726,27 @@ char *const IRONSOURCE_BANNER_EVENTS = "IronSourceBannerEvents";
         return ISBannerSize_BANNER;
     }
 }
+
+-(float)getMaximalAdaptiveHeightWithWidth:(float)width{
+    return [ISBannerSize getMaximalAdaptiveHeightWithWidth:width];
+}
+
+-(float)getDeviceScreenWidth{
+    UIScreen *mainScreen = [UIScreen mainScreen];
+    CGFloat screenWidthPoints;
+    if (@available(iOS 11.0, *)) {
+        UIWindow *mainWindow = [[UIWindow alloc] initWithFrame:mainScreen.bounds];
+        // Get the safe area layout guide
+        UILayoutGuide *safeAreaLayoutGuide = mainWindow.safeAreaLayoutGuide;
+        // Get the width of the screen in points considering safe areas
+        screenWidthPoints = safeAreaLayoutGuide.layoutFrame.size.width;
+    } else {
+        // Fallback on earlier versions
+        screenWidthPoints = mainScreen.bounds.size.width;
+    }
+    return screenWidthPoints;
+}
+
 
 #pragma mark Banner Delegate
 
@@ -792,6 +818,7 @@ char *const IRONSOURCE_BANNER_EVENTS = "IronSourceBannerEvents";
 }
 
 - (void)orientationChanged:(NSNotification *)notification {
+    _bannerViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     [self centerBanner];
 }
 
@@ -838,7 +865,7 @@ char *const IRONSOURCE_BANNER_EVENTS = "IronSourceBannerEvents";
 #pragma mark Helper methods
 
 - (void) setSegment:(NSString*) segmentJSON {
-    [IronSource setSegmentDelegate:self];
+    
     ISSegment *segment = [[ISSegment alloc] init];
     NSError* error;
     if (!segmentJSON)
@@ -992,11 +1019,28 @@ char *const IRONSOURCE_BANNER_EVENTS = "IronSourceBannerEvents";
     [IronSource setAdRevenueDataWithDataSource:dataSource impressionData:impressionData];
 }
 
+#pragma mark TestSuite API
+- (void)launchTestSuite {
+    [IronSource launchTestSuite:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+
 #pragma mark - C Section
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+    
+    typedef struct {
+        double floor;
+        double ceiling;
+    } LPPWaterfallConfigurationData;
+    
+    enum LPPAdFormat
+    {
+        LPPAdFormatRewardedVideo,
+        LPPAdFormatInterstitial,
+        LPPAdFormatBanner
+    };
     
     void RegisterCallback(ISUnityBackgroundCallback func){
             backgroundCallback=func;
@@ -1007,11 +1051,6 @@ extern "C" {
     
     void CFSetPluginData(const char *pluginType, const char *pluginVersion, const char *pluginFrameworkVersion){
         [[iOSBridge start] setPluginDataWithType:GetStringParam(pluginType) pluginVersion:GetStringParam(pluginVersion) pluginFrameworkVersion:GetStringParam(pluginFrameworkVersion)];
-    }
-    
-    
-    void CFSetMediationSegment(const char *segment){
-        [[iOSBridge start] setMediationSegment:GetStringParam(segment)];
     }
     
     const char *CFGetAdvertiserId(){
@@ -1216,8 +1255,8 @@ extern "C" {
     
 #pragma mark Banner API
     
-    void CFLoadBanner(char* description, int width, int height, int position, char* placementName, bool isAdaptive){
-        [[iOSBridge start] loadBanner:GetStringParam(description) width:width height:height position:position placement:GetStringParam(placementName) adaptive:isAdaptive];
+    void CFLoadBanner(char* description, int width, int height, int position, char* placementName, bool isAdaptive,float containerWidth,float containerHeight){
+        [[iOSBridge start] loadBanner:GetStringParam(description) width:width height:height position:position placement:GetStringParam(placementName) adaptive:isAdaptive containerWidth:containerWidth containerHeight:containerHeight];
     }
     
     void CFDestroyBanner (){
@@ -1236,12 +1275,55 @@ extern "C" {
         return [[iOSBridge start] isBannerPlacementCapped:GetStringParam(placementName)];
     }
     
+    float CFIGetMaximalAdaptiveHeight(float width){
+        return [[iOSBridge start] getMaximalAdaptiveHeightWithWidth:width];
+    }
+    
+    float CFIGetDeviceScreenWidth(){
+        return [[iOSBridge start] getDeviceScreenWidth];
+    }
+    
 #pragma mark Segment API
     
     void CFSetSegment (char* jsonString) {
         [[iOSBridge start] setSegment:GetStringParam(jsonString)];
     }
     
+#pragma mark Set Waterfall Configuration API
+
+    void LPPSetWaterfallConfiguration(LPPWaterfallConfigurationData configurationParams, enum LPPAdFormat adFormat) {
+        ISWaterfallConfigurationBuilder *builder = [ISWaterfallConfiguration builder];
+        const double defaultValue = 0.00;
+        
+        if (configurationParams.floor != defaultValue) {
+            NSNumber *floorValue = [NSNumber numberWithDouble:configurationParams.floor];
+            [builder setFloor:floorValue];
+        }
+    
+        if (configurationParams.ceiling != defaultValue) {
+            NSNumber *ceilingValue = [NSNumber numberWithDouble:configurationParams.ceiling];
+            [builder setCeiling:ceilingValue];
+        }
+    
+        ISWaterfallConfiguration *waterfallConfig = [builder build];
+        ISAdUnit *adUnit;
+        switch (adFormat) {
+            case LPPAdFormatInterstitial:
+                adUnit = [ISAdUnit IS_AD_UNIT_INTERSTITIAL];
+                break;
+            case LPPAdFormatRewardedVideo:
+                adUnit = [ISAdUnit IS_AD_UNIT_REWARDED_VIDEO];
+                break;
+            case LPPAdFormatBanner:
+                adUnit = [ISAdUnit IS_AD_UNIT_BANNER];
+                break;
+            default:
+                return;
+        }
+    
+        [IronSource setWaterfallConfiguration:waterfallConfig forAdUnit:adUnit];
+    }
+
 #pragma mark ConsentView API
     
     void CFLoadConsentViewWithType (char* consentViewType){
@@ -1266,8 +1348,12 @@ extern "C" {
         }
         return [[iOSBridge start] setAdRevenueData:GetStringParam(datasource)impressionData:data];
     }
-    
-    
+
+#pragma mark TestSuite API
+    void CFLaunchTestSuite(){
+        [[iOSBridge start] launchTestSuite];
+    }
+
 #pragma mark - ISRewardedVideoManualDelegate methods
     
     

@@ -4,9 +4,14 @@ public interface IronSourceIAgent
 {
 	//******************* Base API *******************//
 
+	/// <summary>
+	/// Allows publishers to set configurations for a waterfall of a given ad type.
+	/// </summary>
+	/// <param name="waterfallConfiguration">The configuration for the given ad types waterfall. </param>
+	/// <param name="adFormat">The AdFormat for which to configure the waterfall.</param>
+	void SetWaterfallConfiguration(WaterfallConfiguration waterfallConfiguration, AdFormat adFormat);
+	
 	void onApplicationPause(bool pause);
-
-	void setMediationSegment(string segment);
 
 	string getAdvertiserId();
 
@@ -110,7 +115,17 @@ public interface IronSourceIAgent
 
 	bool isBannerPlacementCapped(string placementName);
 
+
+	 float getMaximalAdaptiveHeight(float width);
+	
+	 float getDeviceScreenWidth();
+
+	
+	//******************* Segment API *******************//
+
 	void setSegment(IronSourceSegment segment);
+	
+	//******************* Consent API *******************//
 
 	void setConsent(bool consent);
 
@@ -123,6 +138,11 @@ public interface IronSourceIAgent
 	//******************* ILRD API *******************//
 
 	void setAdRevenueData(string dataSource, Dictionary<string, string> impressionData);
+
+	//******************* TestSuite API *******************//
+
+	void launchTestSuite();
+	
 }
 
 public static class dataSource
@@ -141,6 +161,8 @@ public static class IronSourceAdUnits
 	public static string OFFERWALL { get { return "offerwall"; } }
 
 	public static string BANNER { get { return "banner"; } }
+	
+	
 }
 
 public class IronSourceBannerSize
@@ -149,7 +171,8 @@ public class IronSourceBannerSize
 	private int height;
 	private string description;
 	private bool isAdaptive;
-
+	private ISContainerParams isContainerParams = new ISContainerParams();
+	
 	public static IronSourceBannerSize BANNER = new IronSourceBannerSize("BANNER");
 	public static IronSourceBannerSize LARGE = new IronSourceBannerSize("LARGE");
 	public static IronSourceBannerSize RECTANGLE = new IronSourceBannerSize("RECTANGLE");
@@ -178,10 +201,24 @@ public class IronSourceBannerSize
 	{
 		this.isAdaptive = adaptive;
 	}
-
 	public bool IsAdaptiveEnabled()
 	{
 		return this.isAdaptive;
+	}
+
+	/// <summary>
+	///  Set the Container for adaptive banner.
+	/// </summary>
+	/// <param name="setBannerContainerParams">The ability to set the banner container. </param>
+	/// <param name="ISContainerParams">The Container params Width and Height.</param>
+	public void setBannerContainerParams(ISContainerParams parameters)
+	{
+		this.isContainerParams = parameters;
+	}
+
+	public ISContainerParams getBannerContainerParams()
+	{
+		return this.isContainerParams;
 	}
 
 	public string Description { get { return description; } }
@@ -194,3 +231,17 @@ public enum IronSourceBannerPosition
 	TOP = 1,
 	BOTTOM = 2
 };
+
+public class ISContainerParams
+{
+	public float Width { get; set; }
+	public float Height { get; set; }
+
+	public ISContainerParams()
+	{
+		Width = -1;
+		Height = -1;
+	}
+}
+
+
