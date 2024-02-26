@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 93c892ab743252f46ba48090c05515c2
+guid: fafc1a5da53fec645aee17e55841604d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -162,13 +162,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Backgroun_Orange-Sheet_0
+      name: Sun-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1080
-        height: 1920
+        width: 430
+        height: 400
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02a588503dd5b3940be2e61ca9b8b4bd
-      internalID: -1702195295
+      spriteID: 8ac2d022f57093046932976850e05226
+      internalID: -677783204
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Backgroun_Orange-Sheet_1
+      name: Sun-Sheet_1
       rect:
         serializedVersion: 2
-        x: 1080
+        x: 430
         y: 0
-        width: 1080
-        height: 1920
+        width: 430
+        height: 400
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,134 +197,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33a386bce95bf3b45a5d1f950d98ea7b
-      internalID: -1667284416
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Backgroun_Orange-Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 2160
-        y: 0
-        width: 1080
-        height: 1920
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 421ad27cf998ca140bc368a565211ccb
-      internalID: 1082804773
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Backgroun_Orange-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 3240
-        y: 0
-        width: 1080
-        height: 1920
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 99dea4ac3d522fc4baa06cb347bec914
-      internalID: 1289652293
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Backgroun_Orange-Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 4320
-        y: 0
-        width: 1080
-        height: 1920
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6e345a792284d494f9f269dd083048e1
-      internalID: 596258215
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Backgroun_Orange-Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 5400
-        y: 0
-        width: 1080
-        height: 1920
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a601c486cc094e7429aaef0a60b12c06
-      internalID: 219964274
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Backgroun_Orange-Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 6480
-        y: 0
-        width: 1080
-        height: 1920
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9403bedd34d071246a19128c7fb79f5c
-      internalID: 1932440719
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Backgroun_Orange-Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 7560
-        y: 0
-        width: 1080
-        height: 1920
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 78f5d03083e0e444e95490220466db3f
-      internalID: 1650092677
+      spriteID: 5537f03440b049f46b4bde4da62e6fdc
+      internalID: -1720877231
       vertices: []
       indices: 
       edges: []
@@ -340,14 +214,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Backgroun_Orange-Sheet_0: -1702195295
-      Backgroun_Orange-Sheet_1: -1667284416
-      Backgroun_Orange-Sheet_2: 1082804773
-      Backgroun_Orange-Sheet_3: 1289652293
-      Backgroun_Orange-Sheet_4: 596258215
-      Backgroun_Orange-Sheet_5: 219964274
-      Backgroun_Orange-Sheet_6: 1932440719
-      Backgroun_Orange-Sheet_7: 1650092677
+      Sun-Sheet_0: -677783204
+      Sun-Sheet_1: -1720877231
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
