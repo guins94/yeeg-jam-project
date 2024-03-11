@@ -44,11 +44,11 @@ TagManager:
   - name: Background
     uniqueID: 602980147
     locked: 0
-  - name: FlyingObject
-    uniqueID: 269595975
-    locked: 0
   - name: Character
     uniqueID: 4004146191
+    locked: 0
+  - name: FlyingObject
+    uniqueID: 269595975
     locked: 0
   - name: Hazards
     uniqueID: 2784111967
