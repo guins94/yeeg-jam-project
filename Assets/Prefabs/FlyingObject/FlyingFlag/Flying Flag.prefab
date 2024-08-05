@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6690170506222867449}
   - component: {fileID: 6702530406546368718}
   - component: {fileID: 3756277428947258701}
+  - component: {fileID: 6811460505874515233}
   - component: {fileID: 5516870898271916803}
   m_Layer: 0
   m_Name: Flying Flag
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 269595975
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: -8
   m_Sprite: {fileID: 1345903581, guid: 6c6e7a272ebdde5469db24a568f0d033, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -107,6 +108,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6811460505874515233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277431381936494658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3272278624
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!114 &5516870898271916803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,11 +140,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43daaceead540b409f5495fa231689c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shouldHover: 0
-  speed: 2
-  hoverMaxDistance: 5
-  hoverDirection: {x: 0, y: 0}
-  hoverGoing: 1
-  initialPos: {x: 0, y: 0}
-  shouldMove: 1
-  moveDirection: {x: 0, y: 1}
