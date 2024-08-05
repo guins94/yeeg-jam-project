@@ -47,7 +47,7 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     IEnumerator PlaySoundCoroutine(Sound sound)
     {
-        Coroutine coroutine = newSoundCoroutine;
+        Coroutine soundPlayCoroutine = newSoundCoroutine;
         audioSourceList[nextAudioSorceID].loop = sound.loop;
         audioSourceList[nextAudioSorceID].PlayOneShot(sound.audio, sound.volume);
         soundCoroutines.Add(soundPlayCoroutine);
