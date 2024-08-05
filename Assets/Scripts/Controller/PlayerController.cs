@@ -14,25 +14,28 @@ public class PlayerController : MonoBehaviour
     private Vector2 speedVector = Vector2.zero;
     private Vector2 lastSpeedVector = Vector2.zero;
     private bool isMoving = false;
+    public Action MoveInput = null;
 
     private void Start()
     {
-        //onScreenStick.m_PointerDownAction.canceled += onScreenStick.OnPointerUp;
     }
 
-    private void OnMove(InputValue value)
+    public void OnMove(InputValue value)
     {
+        MoveInput?.Invoke();
         Vector2 moveDirection = value.Get<Vector2>();
+        Debug.Log("" + moveDirection);
  
         if(Mathf.Abs(moveDirection.x) < .1f) moveDirection.x = 0;
         if(Mathf.Abs(moveDirection.y) < .1f) moveDirection.y = 0;
         isMoving = Convert.ToBoolean(moveDirection.magnitude);
 
-        if(isMoving)
-        {
-            speedVector = moveDirection;
-        } 
+        
+        speedVector = moveDirection;
+
     }
+
+    
 
     public Vector2 GetInputDirection()
     {

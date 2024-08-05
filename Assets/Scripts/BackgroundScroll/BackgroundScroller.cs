@@ -5,30 +5,33 @@ using UnityEngine;
 public class BackgroundScroller : MonoBehaviour
 {
     [Header("Background References")]
-    [SerializeField] GameObject BrotherBackground = null;
-    [SerializeField] BoxCollider2D backgroundCollider;
-    [SerializeField] Rigidbody2D backgroundRigidbody2D = null;
-    [SerializeField] bool shouldGoUp = true;
+    [SerializeField] GameObject camera = null;
+    [SerializeField] float parallaxSpeed = 0;
 
-    private float width;
+    private float startPos = 0;
+    private float height = 0;
 
-    private float height;
-
-    private float speed = 0;
 
     void Start()
     {
-        backgroundRigidbody2D.velocity = new Vector2(speed, 0);
+        startPos = transform.position.y;
+        height = GetComponent<SpriteRenderer>().bounds.size.y;
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void FixedUpdate()
     {
-        if (collision.CompareTag("Player"))
+        float distance = camera.transform.position.y * parallaxSpeed;
+        float movement = camera.transform.position.y * (1 - parallaxSpeed);
+
+        transform.position = new Vector3(transform.position.x, startPos + distance, transform.position.z);
+
+        if (movement > startPos + height)
         {
-            if (shouldGoUp)
-                gameObject.transform.position = new Vector2(BrotherBackground.transform.position.x, BrotherBackground.transform.position.y + height);
-            else
-                gameObject.transform.position = new Vector2(BrotherBackground.transform.position.x + width, BrotherBackground.transform.position.y);
+            startPos += height;
+        }
+        else if (movement < startPos - height)
+        {
+            startPos -= height;
         }
     }
 }
