@@ -15,9 +15,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 lastSpeedVector = Vector2.zero;
     private bool isMoving = false;
     public Action MoveInput = null;
+    public Action FireInput = null;
 
     private void Start()
     {
+        
     }
 
     public void OnMove(InputValue value)
@@ -33,6 +35,11 @@ public class PlayerController : MonoBehaviour
         
         speedVector = moveDirection;
 
+    }
+
+    public void OnFire(InputValue value)
+    {
+        FireInput?.Invoke();
     }
 
     
