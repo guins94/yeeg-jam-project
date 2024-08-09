@@ -1613,6 +1613,7 @@ GameObject:
   - component: {fileID: 1270854110}
   - component: {fileID: 1270854109}
   - component: {fileID: 1270854111}
+  - component: {fileID: 1270854112}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -1688,6 +1689,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraLockX: {fileID: 1270854109}
+--- !u!114 &1270854112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270854108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5544b82a336bc3f4482f43aabf41ca9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualCamera: {fileID: 1270854109}
+  perlin: {fileID: 0}
+  minorShake: {fileID: 11400000, guid: f71b3b00fa15ae94eb397483497d6adf, type: 2}
+--- !u!1 &1272923547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1272923549}
+  - component: {fileID: 1272923548}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1272923548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272923547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca026c50ff2ab824dbf6507411e23d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1272923549
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272923547}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.09612792, y: -0.121210545, z: -0.004794126}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1347029563
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,6 +2433,7 @@ GameObject:
   - component: {fileID: 2115658889}
   - component: {fileID: 2115658891}
   - component: {fileID: 2115658892}
+  - component: {fileID: 2115658893}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -2429,6 +2490,23 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
+--- !u!114 &2115658893
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115658888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: e9ce97b7a206dc64d90931ea044e0c72, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: -581.8296, y: -187.5726, z: -456.7412}
 --- !u!1 &2134913579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2789,7 +2867,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRigidbody: {fileID: 917445886231975761}
   playerController: {fileID: 4959510919667362512}
-  playerMaxSpeed: 3
+  playerMaxSpeed: 10
   speedMultiplier: 30
   actionCooldownTimer: 2
   dashMultiplier: 800
@@ -2806,7 +2884,7 @@ GameObject:
   - component: {fileID: 7686601006137874898}
   m_Layer: 0
   m_Name: Basket Collider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2901,7 +2979,7 @@ GameObject:
   - component: {fileID: 7526363831231935804}
   m_Layer: 0
   m_Name: Orange_Circle_Balloon
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3042,3 +3120,4 @@ SceneRoots:
   - {fileID: 520782703}
   - {fileID: 1975987969}
   - {fileID: 1960163964}
+  - {fileID: 1272923549}
