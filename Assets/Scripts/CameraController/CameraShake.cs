@@ -1,20 +1,24 @@
 using UnityEngine;
 using Cinemachine;
+using System.Collections.Generic;
+using System.Collections;
 
 public class CameraShake : MonoBehaviour
 {
     // Reference to the Cinemachine Virtual Camera
-    private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] CinemachineVirtualCamera virtualCamera;
 
     // Reference to the Cinemachine Perlin component
-    private CinemachineBasicMultiChannelPerlin perlin;
+    [SerializeField] CinemachineBasicMultiChannelPerlin perlin;
 
-    // Variables to control shake intensity and duration
-    private float shakeDuration = 0f;
-    private float shakeTimer = 0f;
+    [Header("Shake Settings")]
+    [SerializeField] ShakeSettings minorShake;
+
+    // Cached Components
     private float initialAmplitude;
+    private float initialFrequency;
 
-    void Start()
+    void Awake()
     {
         // Get the Virtual Camera component
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
@@ -24,28 +28,30 @@ public class CameraShake : MonoBehaviour
 
         // Store the initial amplitude
         initialAmplitude = perlin.m_AmplitudeGain;
+
+        // Store the initial frequency
+        initialAmplitude = perlin.m_FrequencyGain;
+
+        //Starts to listen to Minor Camera Shake
+        GlobalActions.MinorShake += MakeMinorShake;
     }
 
-    void Update()
+    public void ShakeCamera(float intensity, float duration, float frequency)
     {
-        // If the shake is active, update the timer
-        if (shakeTimer > 0)
-        {
-            shakeTimer -= Time.deltaTime;
-
-            // If the timer runs out, stop the shake
-            if (shakeTimer <= 0)
-            {
-                perlin.m_AmplitudeGain = initialAmplitude; // Reset to initial amplitude
-            }
-        }
+        if (virtualCamera.IsValid) StartCoroutine(ShakeCameraCoroutine(intensity, duration, frequency));
     }
 
-    // Method to trigger the camera shake
-    public void ShakeCamera(float intensity, float duration)
+    private IEnumerator ShakeCameraCoroutine(float intensity, float duration, float frequency)
+    {   
+        perlin.m_AmplitudeGain = intensity; // Set amplitude
+        perlin.m_FrequencyGain = frequency; // Set frequency
+        yield return new WaitForSeconds(duration);
+        perlin.m_AmplitudeGain = initialAmplitude; // Reset to initial amplitude
+        perlin.m_FrequencyGain = frequency; // Reset to Initial frequency
+    }
+
+    private void MakeMinorShake()
     {
-        perlin.m_AmplitudeGain = intensity; // Set shake intensity
-        shakeDuration = duration; // Set shake duration
-        shakeTimer = shakeDuration; // Reset the timer
+        if (virtualCamera.IsValid) StartCoroutine(ShakeCameraCoroutine(minorShake.intensity, minorShake.duration, minorShake.frequency));
     }
 }
