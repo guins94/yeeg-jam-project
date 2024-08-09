@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
     {
         MoveInput?.Invoke();
         Vector2 moveDirection = value.Get<Vector2>();
-        Debug.Log("" + moveDirection);
  
         if(Mathf.Abs(moveDirection.x) < .1f) moveDirection.x = 0;
         if(Mathf.Abs(moveDirection.y) < .1f) moveDirection.y = 0;
