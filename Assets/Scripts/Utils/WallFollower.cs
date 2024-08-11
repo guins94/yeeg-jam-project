@@ -57,4 +57,24 @@ public class WallFollower : MonoBehaviour
             
         }
     }
+
+    // Trigger automatically shakes the screen in a minor way
+    void OnCollisionEnter(Collision other)
+    {   
+        Debug.LogError("" + other.gameObject.name);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            GlobalActions.MinorShake?.Invoke();
+        }
+    }
+
+    // Trigger automatically shakes the screen in a minor way
+    void OnCollisionEnter(Collider other)
+    {
+        Debug.LogError("" + other.name);
+        if (other.CompareTag("Player"))
+        {
+            GlobalActions.MinorShake?.Invoke();
+        }
+    }
 }
