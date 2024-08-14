@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackgroundScroller : MonoBehaviour
+public class BackgroundScroller : Parallax
 {
-    [Header("Background References")]
-    [SerializeField] GameObject camera = null;
-    [SerializeField] float parallaxSpeed = 0;
-
-    private float startPos = 0;
     private float height = 0;
+    public float startPos = 0;
 
 
     void Start()
@@ -18,11 +14,8 @@ public class BackgroundScroller : MonoBehaviour
         height = GetComponent<SpriteRenderer>().bounds.size.y;
     }
 
-    void FixedUpdate()
+    public override void ParallaxMove()
     {
-        float distance = camera.transform.position.y * parallaxSpeed;
-        float movement = camera.transform.position.y * (1 - parallaxSpeed);
-
         transform.position = new Vector3(transform.position.x, startPos + distance, transform.position.z);
 
         if (movement > startPos + height)
@@ -33,5 +26,6 @@ public class BackgroundScroller : MonoBehaviour
         {
             startPos -= height;
         }
-    }
+    } 
+ 
 }

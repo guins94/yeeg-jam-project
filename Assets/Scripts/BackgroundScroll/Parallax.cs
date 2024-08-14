@@ -2,28 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Parallax : MonoBehaviour
+public abstract class Parallax : MonoBehaviour
 {
-    Material material;
-    float distanceWidth = 0;
-    float distanceHeight = 0;
+    [Header("Background References")]
+    [SerializeField] GameObject camera = null;
+    [SerializeField] float parallaxSpeed = 0;
 
-    [Range(0f,0.5f)]
-    public float speed = 0.2f;
+    // Public Reference
+    public GameObject cameraRefence => camera;
+    public float parallaxSpeedReference => parallaxSpeed;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        material = GetComponent<Renderer>().material;    
-    }
+    // Important 
+    public float distance => cameraRefence.transform.position.y * parallaxSpeedReference;
+    public float movement => cameraRefence.transform.position.y * (1 - parallaxSpeedReference);
+        
 
-    // Update is called once per frame
-    void Update()
-    {
-        distanceWidth += Time.deltaTime*speed;
-        material.SetTextureOffset("_MainTex", Vector2.right * distanceWidth);
+    void FixedUpdate() => ParallaxMove(); 
 
-        distanceHeight += Time.deltaTime*speed;
-        material.SetTextureOffset("_MainTex", Vector2.up * distanceHeight);
-    }
+    public abstract void ParallaxMove();
 }
