@@ -6,4 +6,5 @@ using UnityEngine;
 public static class GlobalActions
 {
     public static Action MinorShake;
+    public static Action<string> CoinAmountChanged;
 }
